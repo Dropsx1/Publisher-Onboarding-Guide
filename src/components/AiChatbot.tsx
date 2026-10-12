@@ -48,10 +48,12 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
   const [fastMode, setFastMode] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
 
+  // Scroll only the message list, never the page itself
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const el = messagesContainerRef.current;
+    if (el) el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -149,7 +151,7 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
   };
 
   return (
-    <section id="chat-assistant" className="py-16 border-t border-slate-800/80">
+    <section id="chat-assistant" className="py-16 border-t border-slate-700/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-3 mb-10">
           <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400 uppercase tracking-wider">
@@ -167,11 +169,11 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
         </div>
 
         {/* Chat Card Container */}
-        <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[650px] max-w-4xl mx-auto">
+        <div className="bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[650px] max-w-4xl mx-auto">
           {/* Header */}
-          <div className="bg-slate-950 px-5 py-3.5 border-b border-slate-800 flex items-center justify-between">
+          <div className="bg-slate-950 px-5 py-3.5 border-b border-slate-700 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+              <div className="w-7 h-7 rounded-xl bg-indigo-600 flex items-center justify-center text-white">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
@@ -186,7 +188,7 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
               {/* Fast mode toggle */}
               <button
                 onClick={() => setFastMode(!fastMode)}
-                className={`px-2.5 py-1 text-xs rounded-lg border transition-all cursor-pointer flex items-center gap-1 ${
+                className={`px-2.5 py-1 text-xs rounded-xl border transition-all cursor-pointer flex items-center gap-1 ${
                   fastMode
                     ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
                     : 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
@@ -199,7 +201,7 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
 
               <button
                 onClick={handleResetChat}
-                className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-xl transition-colors cursor-pointer"
                 title="Clear conversation history"
               >
                 <Trash2 className="w-4 h-4" />
@@ -208,7 +210,7 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
           </div>
 
           {/* Messages Scroll Area */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-900/60">
+          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-slate-900/60">
             {messages.map((msg) => (
               <div
                 key={msg.id}
@@ -217,7 +219,7 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
                 }`}
               >
                 <div
-                  className={`w-7 h-7 rounded-lg shrink-0 flex items-center justify-center text-xs ${
+                  className={`w-7 h-7 rounded-xl shrink-0 flex items-center justify-center text-xs ${
                     msg.role === 'user'
                       ? 'bg-slate-700 text-white'
                       : 'bg-indigo-600 text-white shadow-sm shadow-indigo-600/30'
@@ -255,7 +257,7 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
 
             {loading && (
               <div className="flex gap-3 max-w-xl">
-                <div className="w-7 h-7 rounded-lg bg-indigo-600 text-white shrink-0 flex items-center justify-center">
+                <div className="w-7 h-7 rounded-xl bg-indigo-600 text-white shrink-0 flex items-center justify-center">
                   <Bot className="w-4 h-4" />
                 </div>
                 <div className="bg-slate-800/90 rounded-2xl rounded-tl-none px-4 py-3 border border-slate-700/70 flex items-center gap-2 text-xs text-slate-300">
@@ -264,17 +266,16 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Starter Prompts Strip */}
           {messages.length <= 2 && !loading && (
-            <div className="px-4 py-2 bg-slate-950/70 border-t border-slate-800 flex gap-2 overflow-x-auto no-scrollbar">
+            <div className="px-4 py-2 bg-slate-950/70 border-t border-slate-700 flex gap-2 overflow-x-auto no-scrollbar">
               {STARTER_PROMPTS.map((prompt, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleSend(prompt)}
-                  className="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white rounded-lg border border-slate-700 whitespace-nowrap shrink-0 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 text-[11px] bg-slate-800 hover:bg-slate-750 text-slate-300 hover:text-white rounded-xl border border-slate-700 whitespace-nowrap shrink-0 transition-colors cursor-pointer"
                 >
                   {prompt}
                 </button>
@@ -288,7 +289,7 @@ export const AiChatbot: React.FC<AiChatbotProps> = ({
               e.preventDefault();
               handleSend();
             }}
-            className="p-3 bg-slate-950 border-t border-slate-800 flex items-center gap-2"
+            className="p-3 bg-slate-950 border-t border-slate-700 flex items-center gap-2"
           >
             <input
               type="text"

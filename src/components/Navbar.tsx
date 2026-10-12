@@ -18,7 +18,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSupport, activeSection }) 
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 transition-all">
+    <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-slate-700/80 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-8 h-16">
           {/* Zone 1: Brand Wordmark (Single text element wordmark, no decorative pills or subtitles attached) */}
@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSupport, activeSection }) 
             href="#overview"
             className="flex items-center gap-2.5 text-lg font-bold tracking-tight text-white hover:text-indigo-400 transition-colors whitespace-nowrap shrink-0"
           >
-            <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/30">
+            <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-600/30">
               <span className="font-extrabold text-sm tracking-wider">LT</span>
             </div>
             <span>Linktain Publisher Guide</span>
@@ -53,7 +53,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSupport, activeSection }) 
           <div className="hidden sm:flex items-center gap-3 shrink-0">
             <button
               onClick={onOpenSupport}
-              className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 active:scale-95 transition-all shadow-sm shadow-indigo-600/40 whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-500 active:scale-95 transition-all shadow-sm shadow-indigo-600/40 whitespace-nowrap shrink-0 flex items-center gap-1.5 cursor-pointer"
             >
               <span>Publisher Support</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -65,7 +65,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSupport, activeSection }) 
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none cursor-pointer"
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none cursor-pointer"
               aria-label="Toggle mobile menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -76,13 +76,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSupport, activeSection }) 
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-800 bg-slate-900/95 px-4 pt-3 pb-5 space-y-2">
+        <div className="md:hidden border-b border-slate-700 bg-slate-900/95 px-4 pt-3 pb-5 space-y-2">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
             >
               {link.label}
             </a>
@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenSupport, activeSection }) 
                 setMobileMenuOpen(false);
                 onOpenSupport();
               }}
-              className="w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition-all cursor-pointer"
+              className="w-full text-center px-4 py-2.5 text-sm font-semibold text-white bg-indigo-600 rounded-xl hover:bg-indigo-500 transition-all cursor-pointer"
             >
               Contact Publisher Support
             </button>

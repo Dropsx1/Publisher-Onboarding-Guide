@@ -38,7 +38,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
   };
 
   return (
-    <section id="faq" className="py-16 border-t border-slate-800/80 bg-slate-950/40">
+    <section id="faq" className="py-16 border-t border-slate-700/80 bg-slate-950/40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl space-y-3 mb-10">
           <div className="flex items-center gap-2 text-xs font-semibold text-indigo-400 uppercase tracking-wider">
@@ -61,10 +61,10 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3.5 py-1.5 text-xs font-medium rounded-lg border transition-all cursor-pointer whitespace-nowrap ${
+              className={`px-3.5 py-1.5 text-xs font-medium rounded-xl border transition-all cursor-pointer whitespace-nowrap ${
                 selectedCategory === cat.id
                   ? 'bg-indigo-600 border-indigo-500 text-white shadow-sm'
-                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                  : 'bg-slate-900 border-slate-700 text-slate-400 hover:text-white hover:bg-slate-800'
               }`}
             >
               {cat.label}
@@ -75,7 +75,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
         {/* FAQ Accordion List */}
         <div className="max-w-4xl space-y-3">
           {filteredFaqs.length === 0 ? (
-            <div className="p-8 text-center bg-slate-900/60 border border-slate-800 rounded-2xl text-slate-400 text-xs">
+            <div className="p-8 text-center bg-slate-900/60 border border-slate-700 rounded-2xl text-slate-400 text-xs">
               <p>No matching questions found for &ldquo;{searchQuery}&rdquo;.</p>
               <button
                 onClick={() => setSearchQuery('')}
@@ -90,7 +90,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
               return (
                 <div
                   key={faq.id}
-                  className="bg-slate-900/80 border border-slate-800 rounded-xl overflow-hidden transition-all"
+                  className="bg-slate-900/80 border border-slate-700 rounded-xl overflow-hidden transition-all"
                 >
                   <button
                     onClick={() => toggleAccordion(faq.id)}
@@ -107,7 +107,7 @@ export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
                   </button>
 
                   {isExpanded && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60">
+                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-700/60">
                       {faq.answer}
                     </div>
                   )}

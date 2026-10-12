@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import { GoogleGenAI, Type } from '@google/genai';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,13 +17,20 @@ app.use(express.json({ limit: '30mb' }));
 app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
 // Initialize GoogleGenAI client on the server
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-  httpOptions: {
-    headers: {
-      'User-Agent': 'aistudio-build',
-    },
-  },
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Health check for Railway / uptime monitors
+app.get('/healthz', (_req, res) => {
+  res.json({ ok: true, ai: Boolean(process.env.GEMINI_API_KEY) });
+});
+
+// Fail fast with a clear message instead of hanging when the AI key is missing
+app.use('/api/gemini', (_req, res, next) => {
+  if (!process.env.GEMINI_API_KEY) {
+    res.status(503).json({ error: 'AI features are not configured on this deployment (GEMINI_API_KEY missing).' });
+    return;
+  }
+  next();
 });
 
 /**

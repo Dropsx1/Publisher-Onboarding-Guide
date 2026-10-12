@@ -79,7 +79,7 @@ export const GateSimulator: React.FC = () => {
     (stepMode === 3 && completedSteps.includes(1) && completedSteps.includes(2) && completedSteps.includes(3));
 
   return (
-    <section id="gate-models" className="py-16 border-t border-slate-800/80">
+    <section id="gate-models" className="py-16 border-t border-slate-700/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl space-y-3 mb-12">
@@ -99,7 +99,7 @@ export const GateSimulator: React.FC = () => {
         {/* 2-Column Split: Controls + Visual Simulator Frame */}
         <div id="gate-simulator" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
           {/* Controls Column */}
-          <div className="lg:col-span-5 space-y-6 bg-slate-900/80 p-6 rounded-2xl border border-slate-800">
+          <div className="lg:col-span-5 space-y-6 bg-slate-900/80 p-6 rounded-2xl border border-slate-700">
             <div>
               <h3 className="text-base font-semibold text-white flex items-center gap-2">
                 <Layers className="w-4 h-4 text-indigo-400" />
@@ -123,7 +123,7 @@ export const GateSimulator: React.FC = () => {
                       setStepMode(num as 1 | 2 | 3);
                       handleResetSimulator();
                     }}
-                    className={`py-2 px-3 text-xs font-semibold rounded-lg border transition-all cursor-pointer ${
+                    className={`py-2 px-3 text-xs font-semibold rounded-xl border transition-all cursor-pointer ${
                       stepMode === num
                         ? 'bg-indigo-600 border-indigo-500 text-white shadow-sm shadow-indigo-600/30'
                         : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'
@@ -141,7 +141,7 @@ export const GateSimulator: React.FC = () => {
             </div>
 
             {/* Direct Pass Toggle */}
-            <div className="pt-2 border-t border-slate-800 space-y-3">
+            <div className="pt-2 border-t border-slate-700 space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-xs font-semibold uppercase tracking-wider text-slate-300 block">
@@ -191,7 +191,7 @@ export const GateSimulator: React.FC = () => {
             </div>
 
             {/* Target URL */}
-            <div className="space-y-1.5 pt-2 border-t border-slate-800">
+            <div className="space-y-1.5 pt-2 border-t border-slate-700">
               <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Destination Target Resource
               </label>
@@ -199,7 +199,7 @@ export const GateSimulator: React.FC = () => {
                 type="text"
                 value={destinationUrl}
                 onChange={(e) => setDestinationUrl(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs font-mono text-slate-200 focus:outline-none focus:border-indigo-500"
+                className="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-xs font-mono text-slate-200 focus:outline-none focus:border-indigo-500"
               />
             </div>
 
@@ -218,9 +218,9 @@ export const GateSimulator: React.FC = () => {
           </div>
 
           {/* Visitor Gate Preview Frame */}
-          <div className="lg:col-span-7 bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="lg:col-span-7 bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl">
             {/* Mock Browser Header */}
-            <div className="bg-slate-950 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <div className="bg-slate-950 px-4 py-2.5 border-b border-slate-700 flex items-center justify-between text-xs text-slate-400">
               <div className="flex items-center gap-2">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
@@ -303,7 +303,7 @@ export const GateSimulator: React.FC = () => {
                         <button
                           onClick={handleStartTask1}
                           disabled={isTimerRunning}
-                          className="px-3 py-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all cursor-pointer disabled:opacity-50 flex items-center gap-1"
+                          className="px-3 py-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all cursor-pointer disabled:opacity-50 flex items-center gap-1"
                         >
                           {isTimerRunning ? (
                             <>
@@ -325,7 +325,7 @@ export const GateSimulator: React.FC = () => {
                         completedSteps.includes(2)
                           ? 'bg-emerald-950/30 border-emerald-800/80 text-emerald-300'
                           : !completedSteps.includes(1)
-                          ? 'bg-slate-800/40 border-slate-800 text-slate-500 opacity-60'
+                          ? 'bg-slate-800/40 border-slate-700 text-slate-500 opacity-60'
                           : 'bg-slate-800/90 border-slate-700/80 text-white'
                       }`}
                     >
@@ -359,7 +359,7 @@ export const GateSimulator: React.FC = () => {
                           <button
                             onClick={handleCompleteTask2}
                             disabled={!completedSteps.includes(1)}
-                            className="px-3 py-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all cursor-pointer disabled:opacity-40"
+                            className="px-3 py-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all cursor-pointer disabled:opacity-40"
                           >
                             Explore
                           </button>
@@ -375,7 +375,7 @@ export const GateSimulator: React.FC = () => {
                         completedSteps.includes(3)
                           ? 'bg-emerald-950/30 border-emerald-800/80 text-emerald-300'
                           : !completedSteps.includes(2)
-                          ? 'bg-slate-800/40 border-slate-800 text-slate-500 opacity-60'
+                          ? 'bg-slate-800/40 border-slate-700 text-slate-500 opacity-60'
                           : 'bg-slate-800/90 border-slate-700/80 text-white'
                       }`}
                     >
@@ -409,7 +409,7 @@ export const GateSimulator: React.FC = () => {
                           <button
                             onClick={handleCompleteTask3}
                             disabled={!completedSteps.includes(2)}
-                            className="px-3 py-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-all cursor-pointer disabled:opacity-40"
+                            className="px-3 py-1.5 text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition-all cursor-pointer disabled:opacity-40"
                           >
                             Answer
                           </button>
@@ -423,7 +423,7 @@ export const GateSimulator: React.FC = () => {
                     <div className="pt-2 text-center">
                       <div className="relative my-3">
                         <div className="absolute inset-0 flex items-center">
-                          <div className="w-full border-t border-slate-800" />
+                          <div className="w-full border-t border-slate-700" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
                           <span className="bg-slate-900 px-2 text-slate-400 text-[10px] font-semibold">
@@ -456,7 +456,7 @@ export const GateSimulator: React.FC = () => {
 
                   <div>
                     <p className="text-xs text-slate-400">Target link:</p>
-                    <p className="text-xs font-mono text-indigo-300 break-all bg-slate-950 p-2 rounded mt-1 border border-slate-800">
+                    <p className="text-xs font-mono text-indigo-300 break-all bg-slate-950 p-2 rounded mt-1 border border-slate-700">
                       {destinationUrl}
                     </p>
                   </div>
@@ -474,7 +474,7 @@ export const GateSimulator: React.FC = () => {
               )}
 
               {/* Gate Footer Privacy Note */}
-              <div className="text-center text-[11px] text-slate-400 pt-3 border-t border-slate-800/60">
+              <div className="text-center text-[11px] text-slate-400 pt-3 border-t border-slate-700/60">
                 Protected by Linktain Salted Hash Anti-Fraud Engine · No Raw IP Storage
               </div>
             </div>
@@ -496,7 +496,7 @@ export const GateSimulator: React.FC = () => {
             {GATE_STEPS.map((step, idx) => (
               <div
                 key={step.id}
-                className="bg-slate-900/90 border border-slate-800 hover:border-slate-700 rounded-xl p-5 flex flex-col justify-between transition-all group"
+                className="bg-slate-900/90 border border-slate-700 hover:border-slate-700 rounded-xl p-5 flex flex-col justify-between transition-all group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -515,7 +515,7 @@ export const GateSimulator: React.FC = () => {
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-slate-800/80 space-y-2">
+                <div className="mt-6 pt-4 border-t border-slate-700/80 space-y-2">
                   <div className="flex justify-between text-xs">
                     <span className="text-slate-400">Yield:</span>
                     <span className="font-mono font-bold text-emerald-400 tabular-nums">
