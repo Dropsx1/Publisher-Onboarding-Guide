@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { FunctionDeclaration, GoogleGenAI, Type } from '@google/genai';
+import { FunctionDeclaration, GenerateContentParameters, GenerateContentResponse, GoogleGenAI, Type } from '@google/genai';
 
 dotenv.config({ quiet: true });
 
@@ -18,6 +18,77 @@ app.use(express.urlencoded({ extended: true, limit: '30mb' }));
 
 // Initialize GoogleGenAI client on the server
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// ---- Resilient Gemini calls: retry transient errors, then fall back through models ----
+const FALLBACK_CHAINS = {
+  normal: ['gemini-3.8-flash', 'gemini-3.5-flash', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'],
+  fast: ['gemini-3.1-flash-lite', 'gemini-3.5-flash-lite', 'gemini-2.5-flash-lite', 'gemini-2.5-flash'],
+  transcribe: ['gemini-3.5-transcribe', 'gemini-2.5-flash', 'gemini-2.5-flash-lite'],
+};
+const MAX_ATTEMPTS = 3;
+const BACKOFF_MS = [1000, 2000, 4000];
+
+class AllModelsFailedError extends Error {
+  constructor(public lastError: unknown, public tried: string[]) {
+    super('All Gemini models failed');
+  }
+}
+
+function isTransientError(err: any): boolean {
+  const status = Number(err?.status ?? err?.code ?? err?.error?.code);
+  if ([429, 500, 502, 503, 504].includes(status)) return true;
+  const msg = String(err?.message ?? err ?? '');
+  return /UNAVAILABLE|RESOURCE_EXHAUSTED|INTERNAL|high demand|overloaded|\b(429|500|502|503|504)\b|fetch failed|ECONNRESET|ETIMEDOUT/i.test(msg);
+}
+
+function isModelUnusableError(err: any): boolean {
+  const status = Number(err?.status ?? err?.code ?? err?.error?.code);
+  if (status === 404) return true;
+  return /NOT_FOUND|is not found|not supported|does not support/i.test(String(err?.message ?? ''));
+}
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+async function generateWithFallback(
+  models: string[],
+  params: Omit<GenerateContentParameters, 'model'>,
+  label: string,
+): Promise<{ response: GenerateContentResponse; model: string }> {
+  let lastError: unknown;
+  const tried: string[] = [];
+  for (const model of models) {
+    tried.push(model);
+    for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+      try {
+        const response = await ai.models.generateContent({ ...params, model });
+        console.log(`[gemini] ${label} served by ${model} (attempt ${attempt})`);
+        return { response, model };
+      } catch (err: any) {
+        lastError = err;
+        const transient = isTransientError(err);
+        console.warn(`[gemini] ${label} ${model} attempt ${attempt}/${MAX_ATTEMPTS} failed${transient ? ' (transient)' : ''}: ${String(err?.message ?? err).slice(0, 200)}`);
+        if (!transient) break; // non-transient: skip remaining retries, try next model
+        if (attempt < MAX_ATTEMPTS) await sleep(BACKOFF_MS[attempt - 1] + Math.floor(Math.random() * 250));
+      }
+    }
+    if (lastError && !isTransientError(lastError) && !isModelUnusableError(lastError)) {
+      // Request-level error (e.g. bad input) - other models won't help
+      throw lastError;
+    }
+  }
+  throw new AllModelsFailedError(lastError, tried);
+}
+
+function sendGeminiError(res: Response, error: any, fallbackMsg: string) {
+  if (error instanceof AllModelsFailedError) {
+    res.status(503).json({
+      error: 'Our AI assistant is temporarily busy due to high demand. Please try again in a minute.',
+      retryable: true,
+    });
+    return;
+  }
+  res.status(500).json({ error: error?.message || fallbackMsg });
+}
 
 // Health check for Railway / uptime monitors
 app.get('/healthz', (_req, res) => {
@@ -208,7 +279,7 @@ app.post('/api/gemini/chat', async (req: Request, res: Response): Promise<void> 
       return;
     }
 
-    const modelName = fastMode ? 'gemini-3.1-flash-lite' : 'gemini-3.8-flash';
+    const modelChain = fastMode ? FALLBACK_CHAINS.fast : FALLBACK_CHAINS.normal;
 
     // Format chat contents from history
     const contents: Array<{ role: 'user' | 'model'; parts: Array<{ text: string }> }> = [];
@@ -277,15 +348,14 @@ When presenting estimates, comparisons, metrics, or recommendations, enrich your
 
 Always pair rich UI blocks with concise, encouraging, and actionable guidance.`;
 
-    const response = await ai.models.generateContent({
-      model: modelName,
+    const { response, model: servedModel } = await generateWithFallback(modelChain, {
       contents,
       config: {
         systemInstruction,
         tools: [{ functionDeclarations: copilotTools }],
         temperature: 0.7,
       },
-    });
+    }, `chat(${fastMode ? 'fast' : 'normal'})`);
 
     const toolCalls: Array<{ name: string; args: any; id?: string }> = [];
     if (response.functionCalls && Array.isArray(response.functionCalls)) {
@@ -308,12 +378,11 @@ Always pair rich UI blocks with concise, encouraging, and actionable guidance.`;
     res.json({
       reply: replyText || 'I have processed your request.',
       toolCalls,
+      model: servedModel,
     });
   } catch (error: any) {
     console.error('Error in /api/gemini/chat:', error);
-    res.status(500).json({
-      error: error?.message || 'Failed to process chat query with Gemini.',
-    });
+    sendGeminiError(res, error, 'Failed to process chat query with Gemini.');
   }
 });
 
@@ -340,8 +409,7 @@ app.post('/api/gemini/transcribe', async (req: Request, res: Response): Promise<
       },
     };
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.5-transcribe',
+    const { response } = await generateWithFallback(FALLBACK_CHAINS.transcribe, {
       contents: {
         parts: [
           audioPart,
@@ -350,15 +418,13 @@ app.post('/api/gemini/transcribe', async (req: Request, res: Response): Promise<
           },
         ],
       },
-    });
+    }, 'transcribe');
 
     const transcript = response.text ? response.text.trim() : '';
     res.json({ transcript });
   } catch (error: any) {
     console.error('Error in /api/gemini/transcribe:', error);
-    res.status(500).json({
-      error: error?.message || 'Failed to transcribe audio with gemini-3.5-transcribe.',
-    });
+    sendGeminiError(res, error, 'Failed to transcribe audio.');
   }
 });
 
@@ -385,8 +451,7 @@ app.post('/api/gemini/analyze-gate', async (req: Request, res: Response): Promis
 
 Provide tailored publisher configuration recommendations including the ideal gate model (Ad Steps, Direct Pass, or Hybrid), optimal number of steps, pass pricing, estimated RPM range, retention tactics, and compliance rules.`;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.8-flash',
+    const { response } = await generateWithFallback(FALLBACK_CHAINS.normal, {
       contents: prompt,
       config: {
         systemInstruction: 'You are Linktain Chief Optimization Architect. Respond strictly with structured JSON matching the requested schema.',
@@ -452,15 +517,13 @@ Provide tailored publisher configuration recommendations including the ideal gat
           ],
         },
       },
-    });
+    }, 'analyze-gate');
 
     const parsed = JSON.parse(response.text || '{}');
     res.json(parsed);
   } catch (error: any) {
     console.error('Error in /api/gemini/analyze-gate:', error);
-    res.status(500).json({
-      error: error?.message || 'Failed to analyze gate configuration.',
-    });
+    sendGeminiError(res, error, 'Failed to analyze gate configuration.');
   }
 });
 
