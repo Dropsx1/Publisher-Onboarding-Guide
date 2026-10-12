@@ -3,13 +3,52 @@ import { DollarSign, TrendingUp, Calendar, CreditCard, Sparkles } from 'lucide-r
 import earningsImg from '../assets/images/linktain_creator_earnings_1791815768516.jpg';
 import { TRAFFIC_TIERS } from '../data/guideContent';
 
-export const EarningsCalculator: React.FC = () => {
+interface EarningsCalculatorProps {
+  monthlyClicks?: number;
+  setMonthlyClicks?: (clicks: number) => void;
+  selectedTierId?: string;
+  setSelectedTierId?: (tierId: string) => void;
+  gateConfig?: '1step' | '2step' | '3step' | 'hybrid' | 'pass_only';
+  setGateConfig?: (config: '1step' | '2step' | '3step' | 'hybrid' | 'pass_only') => void;
+  passPrice?: number;
+  setPassPrice?: (price: number) => void;
+  passConversionPct?: number;
+  setPassConversionPct?: (pct: number) => void;
+}
+
+export const EarningsCalculator: React.FC<EarningsCalculatorProps> = ({
+  monthlyClicks: controlledClicks,
+  setMonthlyClicks: setControlledClicks,
+  selectedTierId: controlledTierId,
+  setSelectedTierId: setControlledTierId,
+  gateConfig: controlledGateConfig,
+  setGateConfig: setControlledGateConfig,
+  passPrice: controlledPassPrice,
+  setPassPrice: setControlledPassPrice,
+  passConversionPct: controlledConversionPct,
+  setPassConversionPct: setControlledConversionPct,
+}) => {
   const clicksInputId = useId();
-  const [monthlyClicks, setMonthlyClicks] = useState<number>(65000);
-  const [selectedTierId, setSelectedTierId] = useState<string>('tier1');
-  const [gateConfig, setGateConfig] = useState<'1step' | '2step' | '3step' | 'hybrid' | 'pass_only'>('hybrid');
-  const [passPrice, setPassPrice] = useState<number>(1.99);
-  const [passConversionPct, setPassConversionPct] = useState<number>(4.5); // % of visitors who buy pass
+  const [internalClicks, setInternalClicks] = useState<number>(65000);
+  const [internalTierId, setInternalTierId] = useState<string>('tier1');
+  const [internalGateConfig, setInternalGateConfig] = useState<'1step' | '2step' | '3step' | 'hybrid' | 'pass_only'>('hybrid');
+  const [internalPassPrice, setInternalPassPrice] = useState<number>(1.99);
+  const [internalConversionPct, setInternalConversionPct] = useState<number>(4.5);
+
+  const monthlyClicks = controlledClicks !== undefined ? controlledClicks : internalClicks;
+  const setMonthlyClicks = setControlledClicks || setInternalClicks;
+
+  const selectedTierId = controlledTierId !== undefined ? controlledTierId : internalTierId;
+  const setSelectedTierId = setControlledTierId || setInternalTierId;
+
+  const gateConfig = controlledGateConfig !== undefined ? controlledGateConfig : internalGateConfig;
+  const setGateConfig = setControlledGateConfig || setInternalGateConfig;
+
+  const passPrice = controlledPassPrice !== undefined ? controlledPassPrice : internalPassPrice;
+  const setPassPrice = setControlledPassPrice || setInternalPassPrice;
+
+  const passConversionPct = controlledConversionPct !== undefined ? controlledConversionPct : internalConversionPct;
+  const setPassConversionPct = setControlledConversionPct || setInternalConversionPct;
 
   const selectedTier = TRAFFIC_TIERS.find((t) => t.id === selectedTierId) || TRAFFIC_TIERS[0];
 

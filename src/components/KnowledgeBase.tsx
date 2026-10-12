@@ -5,14 +5,21 @@ import { FAQS, FaqItem } from '../data/guideContent';
 interface KnowledgeBaseProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
+  selectedCategory?: string;
+  setSelectedCategory?: (cat: string) => void;
 }
 
 export const KnowledgeBase: React.FC<KnowledgeBaseProps> = ({
   searchQuery,
   setSearchQuery,
+  selectedCategory: controlledCategory,
+  setSelectedCategory: setControlledCategory,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [internalCategory, setInternalCategory] = useState<string>('all');
   const [expandedId, setExpandedId] = useState<string | null>('faq-1');
+
+  const selectedCategory = controlledCategory !== undefined ? controlledCategory : internalCategory;
+  const setSelectedCategory = setControlledCategory || setInternalCategory;
 
   const categories = [
     { id: 'all', label: 'All FAQs' },

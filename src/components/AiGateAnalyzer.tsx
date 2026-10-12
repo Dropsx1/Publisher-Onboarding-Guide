@@ -24,7 +24,18 @@ interface AnalysisResult {
   complianceWarnings: string[];
 }
 
-export const AiGateAnalyzer: React.FC = () => {
+interface AiGateAnalyzerProps {
+  externalPreset?: {
+    destinationType?: string;
+    destinationUrl?: string;
+    targetNiche?: string;
+    trafficSource?: string;
+    monthlyClicks?: string;
+    timestamp?: number;
+  };
+}
+
+export const AiGateAnalyzer: React.FC<AiGateAnalyzerProps> = ({ externalPreset }) => {
   const [destinationType, setDestinationType] = useState('Telegram VIP Channel & Signals');
   const [destinationUrl, setDestinationUrl] = useState('https://t.me/crypto_alpha_vip');
   const [targetNiche, setTargetNiche] = useState('Finance & Trading');
@@ -34,6 +45,16 @@ export const AiGateAnalyzer: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<AnalysisResult | null>(null);
+
+  React.useEffect(() => {
+    if (externalPreset && externalPreset.timestamp) {
+      if (externalPreset.destinationType) setDestinationType(externalPreset.destinationType);
+      if (externalPreset.destinationUrl) setDestinationUrl(externalPreset.destinationUrl);
+      if (externalPreset.targetNiche) setTargetNiche(externalPreset.targetNiche);
+      if (externalPreset.trafficSource) setTrafficSource(externalPreset.trafficSource);
+      if (externalPreset.monthlyClicks) setMonthlyClicks(externalPreset.monthlyClicks);
+    }
+  }, [externalPreset]);
 
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -4,15 +4,30 @@ import { X, Send, CheckCircle2, Mail, MessageSquare } from 'lucide-react';
 interface ContactModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialSubject?: string;
+  initialMessage?: string;
 }
 
-export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) => {
+export const ContactModal: React.FC<ContactModalProps> = ({
+  isOpen,
+  onClose,
+  initialSubject,
+  initialMessage,
+}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('Integration & Gate Setup');
-  const [message, setMessage] = useState('');
+  const [subject, setSubject] = useState(initialSubject || 'Integration & Gate Setup');
+  const [message, setMessage] = useState(initialMessage || '');
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      if (initialSubject) setSubject(initialSubject);
+      if (initialMessage) setMessage(initialMessage);
+      setSubmitted(false);
+    }
+  }, [isOpen, initialSubject, initialMessage]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

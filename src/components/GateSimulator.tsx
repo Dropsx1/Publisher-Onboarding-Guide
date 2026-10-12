@@ -14,10 +14,43 @@ import {
 import gateStepsImg from '../assets/images/linktain_gate_steps_1791815755845.jpg';
 import { GATE_STEPS } from '../data/guideContent';
 
-export const GateSimulator: React.FC = () => {
-  const [stepMode, setStepMode] = useState<1 | 2 | 3>(2);
-  const [allowPass, setAllowPass] = useState(true);
-  const [passPrice, setPassPrice] = useState('1.49');
+interface GateSimulatorProps {
+  stepMode?: 1 | 2 | 3;
+  setStepMode?: (mode: 1 | 2 | 3) => void;
+  allowPass?: boolean;
+  setAllowPass?: (allow: boolean) => void;
+  passPrice?: string;
+  setPassPrice?: (price: string) => void;
+  destinationUrl?: string;
+  setDestinationUrl?: (url: string) => void;
+}
+
+export const GateSimulator: React.FC<GateSimulatorProps> = ({
+  stepMode: controlledStepMode,
+  setStepMode: setControlledStepMode,
+  allowPass: controlledAllowPass,
+  setAllowPass: setControlledAllowPass,
+  passPrice: controlledPassPrice,
+  setPassPrice: setControlledPassPrice,
+  destinationUrl: controlledDestUrl,
+  setDestinationUrl: setControlledDestUrl,
+}) => {
+  const [internalStepMode, setInternalStepMode] = useState<1 | 2 | 3>(2);
+  const [internalAllowPass, setInternalAllowPass] = useState(true);
+  const [internalPassPrice, setInternalPassPrice] = useState('1.49');
+  const [internalDestUrl, setInternalDestUrl] = useState('https://linktain.com/verified-content-demo');
+
+  const stepMode = controlledStepMode !== undefined ? controlledStepMode : internalStepMode;
+  const setStepMode = setControlledStepMode || setInternalStepMode;
+
+  const allowPass = controlledAllowPass !== undefined ? controlledAllowPass : internalAllowPass;
+  const setAllowPass = setControlledAllowPass || setInternalAllowPass;
+
+  const passPrice = controlledPassPrice !== undefined ? controlledPassPrice : internalPassPrice;
+  const setPassPrice = setControlledPassPrice || setInternalPassPrice;
+
+  const destinationUrl = controlledDestUrl !== undefined ? controlledDestUrl : internalDestUrl;
+  const setDestinationUrl = setControlledDestUrl || setInternalDestUrl;
 
   // Simulator visitor state
   const [currentStep, setCurrentStep] = useState(1);
@@ -25,7 +58,6 @@ export const GateSimulator: React.FC = () => {
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
   const [unlockedViaPass, setUnlockedViaPass] = useState(false);
-  const [destinationUrl, setDestinationUrl] = useState('https://linktain.com/verified-content-demo');
 
   // Handle countdown timer for Step 1 simulation
   useEffect(() => {
