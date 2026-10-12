@@ -11,13 +11,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenSupport }) => {
   };
 
   return (
-    <footer className="border-t border-slate-800/80 bg-slate-950 py-12 text-slate-400">
+    <footer className="border-t border-slate-700/80 bg-slate-950 py-12 text-slate-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start justify-between">
           {/* Brand Col */}
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+              <div className="w-7 h-7 rounded-xl bg-indigo-600 flex items-center justify-center text-white">
                 <span className="font-extrabold text-xs">LT</span>
               </div>
               <span className="text-base font-bold text-white tracking-tight">
@@ -81,7 +81,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenSupport }) => {
             </p>
             <button
               onClick={onOpenSupport}
-              className="px-4 py-2 text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 rounded-lg border border-slate-700 transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-white bg-slate-800 hover:bg-slate-700 rounded-xl border border-slate-700 transition-colors cursor-pointer"
             >
               Open Publisher Support Ticket
             </button>

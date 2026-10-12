@@ -83,7 +83,7 @@ export const AiGateAnalyzer: React.FC = () => {
   };
 
   return (
-    <section id="ai-strategist" className="py-16 border-t border-slate-800/80">
+    <section id="ai-strategist" className="py-16 border-t border-slate-700/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl space-y-3 mb-12">
@@ -155,7 +155,7 @@ export const AiGateAnalyzer: React.FC = () => {
           {/* Form */}
           <form
             onSubmit={handleAnalyze}
-            className="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-7 space-y-4 shadow-xl"
+            className="lg:col-span-5 bg-slate-900/90 border border-slate-700 rounded-2xl p-6 sm:p-7 space-y-4 shadow-xl"
           >
             <h3 className="text-base font-bold text-white flex items-center gap-2">
               <Layers className="w-4 h-4 text-purple-400" />
@@ -263,7 +263,7 @@ export const AiGateAnalyzer: React.FC = () => {
             )}
 
             {!result && !loading && (
-              <div className="bg-slate-900/60 border border-dashed border-slate-800 rounded-2xl p-10 text-center space-y-3">
+              <div className="bg-slate-900/60 border border-dashed border-slate-700 rounded-2xl p-10 text-center space-y-3">
                 <div className="w-12 h-12 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 mx-auto flex items-center justify-center">
                   <Sparkles className="w-6 h-6" />
                 </div>
@@ -292,25 +292,25 @@ export const AiGateAnalyzer: React.FC = () => {
 
                 {/* Stat cards */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-700 space-y-1">
                     <span className="text-[10px] text-slate-400 uppercase">Optimal Steps</span>
                     <p className="text-base font-bold text-white font-mono">
                       {result.recommendedStepCount} Steps
                     </p>
                   </div>
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-700 space-y-1">
                     <span className="text-[10px] text-slate-400 uppercase">Pass Price</span>
                     <p className="text-base font-bold text-amber-400 font-mono">
                       {result.recommendedPassPrice}
                     </p>
                   </div>
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-700 space-y-1">
                     <span className="text-[10px] text-slate-400 uppercase">Estimated RPM</span>
                     <p className="text-base font-bold text-emerald-400 font-mono">
                       {result.estimatedRpm}
                     </p>
                   </div>
-                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+                  <div className="p-3 bg-slate-950 rounded-xl border border-slate-700 space-y-1">
                     <span className="text-[10px] text-slate-400 uppercase">Unlock Rate</span>
                     <p className="text-base font-bold text-indigo-400 font-mono">
                       {result.conversionRate}
@@ -319,7 +319,7 @@ export const AiGateAnalyzer: React.FC = () => {
                 </div>
 
                 {/* Steps Recommended */}
-                <div className="space-y-2 pt-2 border-t border-slate-800">
+                <div className="space-y-2 pt-2 border-t border-slate-700">
                   <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
                     <Tag className="w-3.5 h-3.5 text-indigo-400" />
                     <span>Recommended Task Progression</span>
@@ -337,7 +337,7 @@ export const AiGateAnalyzer: React.FC = () => {
                 </div>
 
                 {/* Tactical Tips */}
-                <div className="space-y-2 pt-2 border-t border-slate-800">
+                <div className="space-y-2 pt-2 border-t border-slate-700">
                   <span className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
                     <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
                     <span>High-Retention Optimization Tactics</span>
@@ -354,7 +354,7 @@ export const AiGateAnalyzer: React.FC = () => {
 
                 {/* Compliance Warnings */}
                 {result.complianceWarnings.length > 0 && (
-                  <div className="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5 text-xs">
+                  <div className="p-3.5 bg-slate-950/80 rounded-xl border border-slate-700 space-y-1.5 text-xs">
                     <span className="font-semibold text-amber-400 flex items-center gap-1.5">
                       <ShieldAlert className="w-3.5 h-3.5" />
                       <span>Linktain Policy & Safety Safeguards</span>

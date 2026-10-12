@@ -63,7 +63,7 @@ export const EarningsCalculator: React.FC = () => {
       : 'PayPal (Direct digital transfer, $20 min)';
 
   return (
-    <section id="calculator" className="py-16 border-t border-slate-800/80 bg-slate-950/60">
+    <section id="calculator" className="py-16 border-t border-slate-700/80 bg-slate-950/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl space-y-3 mb-12">
@@ -83,7 +83,7 @@ export const EarningsCalculator: React.FC = () => {
         {/* Main Calculator Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Inputs Column */}
-          <div className="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-7 shadow-xl">
+          <div className="lg:col-span-7 bg-slate-900/90 border border-slate-700 rounded-2xl p-6 sm:p-8 space-y-7 shadow-xl">
             {/* 1. Monthly Traffic Slider */}
             <div className="space-y-3">
               <div className="flex items-center justify-between">
@@ -103,7 +103,7 @@ export const EarningsCalculator: React.FC = () => {
                 step={5000}
                 value={monthlyClicks}
                 onChange={(e) => setMonthlyClicks(parseInt(e.target.value, 10))}
-                className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-emerald-500"
+                className="w-full h-2 bg-slate-800 rounded-xl appearance-none cursor-pointer accent-emerald-500"
               />
 
               <div className="flex justify-between items-center gap-2 pt-1">
@@ -124,7 +124,7 @@ export const EarningsCalculator: React.FC = () => {
             </div>
 
             {/* 2. Geographic Traffic Tier */}
-            <div className="space-y-2.5 pt-4 border-t border-slate-800">
+            <div className="space-y-2.5 pt-4 border-t border-slate-700">
               <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Audience Geographic Tier
               </label>
@@ -136,7 +136,7 @@ export const EarningsCalculator: React.FC = () => {
                     className={`p-3 text-left rounded-xl border transition-all cursor-pointer ${
                       selectedTierId === tier.id
                         ? 'bg-indigo-600/20 border-indigo-500 text-white shadow-sm'
-                        : 'bg-slate-800/60 border-slate-800 text-slate-300 hover:bg-slate-800'
+                        : 'bg-slate-800/60 border-slate-700 text-slate-300 hover:bg-slate-800'
                     }`}
                   >
                     <p className="text-xs font-bold text-white">{tier.name}</p>
@@ -152,7 +152,7 @@ export const EarningsCalculator: React.FC = () => {
             </div>
 
             {/* 3. Gate Architecture Model */}
-            <div className="space-y-2.5 pt-4 border-t border-slate-800">
+            <div className="space-y-2.5 pt-4 border-t border-slate-700">
               <label className="text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Gating Architecture
               </label>
@@ -167,10 +167,10 @@ export const EarningsCalculator: React.FC = () => {
                   <button
                     key={item.id}
                     onClick={() => setGateConfig(item.id as any)}
-                    className={`p-2.5 rounded-lg border text-left transition-all cursor-pointer ${
+                    className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                       gateConfig === item.id
                         ? 'bg-emerald-600/20 border-emerald-500 text-white'
-                        : 'bg-slate-800/60 border-slate-800 text-slate-300 hover:bg-slate-800'
+                        : 'bg-slate-800/60 border-slate-700 text-slate-300 hover:bg-slate-800'
                     }`}
                   >
                     <p className="text-xs font-bold text-white">{item.label}</p>
@@ -182,7 +182,7 @@ export const EarningsCalculator: React.FC = () => {
 
             {/* 4. Pass Configuration (if applicable) */}
             {(gateConfig === 'hybrid' || gateConfig === 'pass_only') && (
-              <div className="p-4 bg-slate-950/70 border border-slate-800 rounded-xl space-y-4 pt-3">
+              <div className="p-4 bg-slate-950/70 border border-slate-700 rounded-xl space-y-4 pt-3">
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-400">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Creator Pass Parameters</span>
@@ -222,7 +222,7 @@ export const EarningsCalculator: React.FC = () => {
                       step={0.5}
                       value={passConversionPct}
                       onChange={(e) => setPassConversionPct(parseFloat(e.target.value))}
-                      className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                      className="w-full h-1.5 bg-slate-800 rounded-xl appearance-none cursor-pointer accent-amber-500"
                     />
                   </div>
                 </div>
@@ -251,7 +251,7 @@ export const EarningsCalculator: React.FC = () => {
               </div>
 
               {/* Breakdown Matrix */}
-              <div className="pt-4 border-t border-slate-800/80 space-y-3 text-xs">
+              <div className="pt-4 border-t border-slate-700/80 space-y-3 text-xs">
                 <div className="flex justify-between text-slate-300">
                   <span>Ad Tasks Revenue:</span>
                   <span className="font-mono font-semibold text-white tabular-nums">
@@ -273,7 +273,7 @@ export const EarningsCalculator: React.FC = () => {
               </div>
 
               {/* Recommended Payout Rail */}
-              <div className="p-3.5 bg-slate-950/80 rounded-xl border border-slate-800 space-y-1.5">
+              <div className="p-3.5 bg-slate-950/80 rounded-xl border border-slate-700 space-y-1.5">
                 <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-300">
                   <CreditCard className="w-3.5 h-3.5 text-indigo-400" />
                   <span>Recommended Payout Channel</span>
@@ -288,7 +288,7 @@ export const EarningsCalculator: React.FC = () => {
             </div>
 
             {/* Dashboard Visual Thumbnail Card */}
-            <div className="rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 shadow-lg">
+            <div className="rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 shadow-lg">
               <img
                 src={earningsImg}
                 alt="Linktain Publisher Revenue Analytics Visual"

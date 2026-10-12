@@ -22,7 +22,7 @@ export const Hero: React.FC<HeroProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left Column: Headline, Value Proposition, Search */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="flex items-center gap-2 text-xs font-medium text-indigo-400 uppercase tracking-widest">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs font-medium text-indigo-400 uppercase tracking-widest">
               <span>Official Publisher Documentation</span>
               <span aria-hidden="true">·</span>
               <span>Updated for 2026</span>
@@ -62,28 +62,28 @@ export const Hero: React.FC<HeroProps> = ({
             <div className="flex flex-wrap items-center gap-2.5 pt-2">
               <button
                 onClick={() => onSelectAction('gate-simulator')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-lg border border-slate-700/60 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-xl border border-slate-700/60 transition-colors cursor-pointer"
               >
                 <Sliders className="w-3.5 h-3.5 text-indigo-400" />
                 <span>Gate Simulator</span>
               </button>
               <button
                 onClick={() => onSelectAction('calculator')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-lg border border-slate-700/60 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-xl border border-slate-700/60 transition-colors cursor-pointer"
               >
                 <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Earnings Calculator</span>
               </button>
               <button
                 onClick={() => onSelectAction('ai-strategist')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-lg border border-slate-700/60 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-xl border border-slate-700/60 transition-colors cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5 text-purple-400" />
                 <span>Gemini Gate Advisor</span>
               </button>
               <button
                 onClick={() => onSelectAction('voice-transcribe')}
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-lg border border-slate-700/60 transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-slate-200 bg-slate-800/90 hover:bg-slate-700 hover:text-white rounded-xl border border-slate-700/60 transition-colors cursor-pointer"
               >
                 <Mic className="w-3.5 h-3.5 text-amber-400" />
                 <span>Transcribe Memo</span>
@@ -93,7 +93,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* Right Column: Hero Visual Asset with Fallback */}
           <div className="lg:col-span-5">
-            <div className="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-900 group">
+            <div className="relative rounded-2xl overflow-hidden border border-slate-700 shadow-2xl bg-slate-900 group">
               <img
                 src={heroBannerImg}
                 alt="Linktain Publisher Operations Dashboard"
@@ -103,14 +103,14 @@ export const Hero: React.FC<HeroProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
               <div className="absolute bottom-4 left-4 right-4 text-xs text-slate-300 flex items-center justify-between">
                 <span className="font-medium text-white">Live Creator Console Overview</span>
-                <span className="text-slate-400">High-Converting Gating Engine</span>
+                <span className="hidden sm:inline text-slate-400">High-Converting Gating Engine</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* 4-Item Quantitative Rigor Strip */}
-        <div className="mt-14 pt-8 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="mt-14 pt-8 border-t border-slate-700/80 grid grid-cols-2 md:grid-cols-4 gap-6">
           <div className="space-y-1">
             <p className="text-2xl lg:text-3xl font-extrabold text-white font-mono tabular-nums">
               $18.40

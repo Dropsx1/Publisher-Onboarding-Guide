@@ -14,7 +14,7 @@ import securityImg from '../assets/images/linktain_security_compliance_179181577
 
 export const PayoutAndCompliance: React.FC = () => {
   return (
-    <section id="payouts" className="py-16 border-t border-slate-800/80">
+    <section id="payouts" className="py-16 border-t border-slate-700/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl space-y-3 mb-12">
@@ -34,7 +34,7 @@ export const PayoutAndCompliance: React.FC = () => {
         {/* 3 Payment Rails Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           {/* Rail 1: PayPal */}
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-slate-700 transition-all">
+          <div className="bg-slate-900/90 border border-slate-700 rounded-2xl p-6 space-y-4 hover:border-slate-700 transition-all">
             <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center">
               <CreditCard className="w-5 h-5" />
             </div>
@@ -44,7 +44,7 @@ export const PayoutAndCompliance: React.FC = () => {
                 Fast digital wallet payout ideal for emerging creators and international publishers.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-800/80 space-y-2 text-xs">
+            <div className="pt-3 border-t border-slate-700/80 space-y-2 text-xs">
               <div className="flex justify-between">
                 <span className="text-slate-400">Minimum Threshold:</span>
                 <span className="font-mono font-bold text-white">$20.00 USD</span>
@@ -61,7 +61,7 @@ export const PayoutAndCompliance: React.FC = () => {
           </div>
 
           {/* Rail 2: Crypto USDT / USDC */}
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-slate-700 transition-all">
+          <div className="bg-slate-900/90 border border-slate-700 rounded-2xl p-6 space-y-4 hover:border-slate-700 transition-all">
             <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
               <Coins className="w-5 h-5" />
             </div>
@@ -71,7 +71,7 @@ export const PayoutAndCompliance: React.FC = () => {
                 Direct on-chain stablecoin transfer supported across TRC20 and ERC20 networks.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-800/80 space-y-2 text-xs">
+            <div className="pt-3 border-t border-slate-700/80 space-y-2 text-xs">
               <div className="flex justify-between">
                 <span className="text-slate-400">Minimum Threshold:</span>
                 <span className="font-mono font-bold text-white">$50.00 USD</span>
@@ -88,7 +88,7 @@ export const PayoutAndCompliance: React.FC = () => {
           </div>
 
           {/* Rail 3: Bank Wire Transfer */}
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-4 hover:border-slate-700 transition-all">
+          <div className="bg-slate-900/90 border border-slate-700 rounded-2xl p-6 space-y-4 hover:border-slate-700 transition-all">
             <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center">
               <Building className="w-5 h-5" />
             </div>
@@ -98,7 +98,7 @@ export const PayoutAndCompliance: React.FC = () => {
                 Direct SWIFT or domestic ACH deposit for high-volume publishing agencies and top creators.
               </p>
             </div>
-            <div className="pt-3 border-t border-slate-800/80 space-y-2 text-xs">
+            <div className="pt-3 border-t border-slate-700/80 space-y-2 text-xs">
               <div className="flex justify-between">
                 <span className="text-slate-400">Minimum Threshold:</span>
                 <span className="font-mono font-bold text-white">$100.00 USD</span>
@@ -116,7 +116,7 @@ export const PayoutAndCompliance: React.FC = () => {
         </div>
 
         {/* Salted IP Privacy Deep Dive with Generated Visual */}
-        <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 mb-16 shadow-xl">
+        <div className="bg-slate-900/90 border border-slate-700 rounded-2xl p-6 sm:p-8 mb-16 shadow-xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7 space-y-5">
               <div className="flex items-center gap-2 text-xs font-semibold text-cyan-400 uppercase tracking-wider">
@@ -152,7 +152,7 @@ export const PayoutAndCompliance: React.FC = () => {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="rounded-xl overflow-hidden border border-slate-800 shadow-xl bg-slate-950">
+              <div className="rounded-xl overflow-hidden border border-slate-700 shadow-xl bg-slate-950">
                 <img
                   src={securityImg}
                   alt="Linktain Salted IP Cryptographic Network Visual"
